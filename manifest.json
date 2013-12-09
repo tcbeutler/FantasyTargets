@@ -1,0 +1,24 @@
+{
+  "name": "Fantasy Clubhouse Plus",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "tbd",
+  "permissions": [
+    "http://espn.go.com//*",
+    "http://games.espn.go.com/*",
+    "webRequest"
+  ],
+  "icons": {
+    "48" : "sample-48.png",
+    "128" : "sample-128.png"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://games.espn.go.com/ffl/*"],
+      "js" : ["jquery.js", "contentscript.js"]
+    }
+  ]
+}

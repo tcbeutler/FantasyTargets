@@ -6,9 +6,9 @@ var pnum;
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    console.log(request.url);
+    var playerId = request.url.match(/playerId=(\d+)&/)[1];
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://espn.go.com/nfl/player/_/id/15168/case-keenum", true);
+    xhr.open("GET", "http://espn.go.com/nfl/player/_/id/" + playerId, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
             pnum = $('ul.general-info li.first', xhr.responseText).text().trim().split(' ')[0];

@@ -3,10 +3,9 @@ console.log('hi');
 //  console.log('completed' + details);
 // }, {urls: ["http://*/*"]}, ["responseHeaders"]);
 chrome.webRequest.onCompleted.addListener(
-function(details) {
+    function(details) {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {url: details.url}, function(response) {
-        console.log(response);
       });
     });
 },

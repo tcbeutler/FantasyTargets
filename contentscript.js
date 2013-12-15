@@ -6,9 +6,12 @@ chrome.runtime.onMessage.addListener(
     xhr.open("GET", "http://espn.go.com/nfl/player/gamelog/_/id/" + playerId, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
-          var targets = getTargets(xhr.responseText);
+          var targets = getColumn(xhr.responseText, 'TGTS');
           if (targets)
             injectCells(2, targets);
+          // var qbrs = getColumn(xhr.responseText, 'QBR');
+          // if (qbrs)
+          //   injectCells(5, qbrs);
           addNumber(xhr.responseText);
         }
     };
@@ -48,21 +51,21 @@ function injectCells(index, values) {
   }
 }
 
-function getTargets(xhr) {
+function getColumn(xhr, colName) {
   var headerVals = $.map(
     $("div.mod-player-stats div.mod-content table tbody tr.colhead td", xhr),
     function(val) { return val.innerText; });
-  var tgtIndex = headerVals.indexOf('TGTS');
+  var index = headerVals.indexOf(colName);
+  console.log(index)
+  if (index < 0) return;
 
-  if (tgtIndex < 0) return;
-
-  var targets = $.map(
+  var values = $.map(
     $('div.mod-player-stats div.mod-content table tbody tr.colhead, .oddrow, .evenrow', xhr),
     function(row) {
-      return row.cells[4].innerText;
+      return row.cells[index].innerText;
     });
 
-  return targets
+  return values
 }
 
 function cellsEqual(row, cellIndexArray, value) {

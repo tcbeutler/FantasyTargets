@@ -1,6 +1,3 @@
-var pnum;
-
-
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     var playerId = request.url.match(/playerId=(\d+)&/)[1];
@@ -19,7 +16,7 @@ chrome.runtime.onMessage.addListener(
   });
 
 function addNumber(xhr) {
-  pnum = $('ul.general-info li.first', xhr).text().trim().split(' ')[0];
+  var pnum = $('ul.general-info li.first', xhr).text().trim().split(' ')[0];
   $('div.player-name').append('<p>' + pnum + '</p>');
 }
 

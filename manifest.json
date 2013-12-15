@@ -1,8 +1,8 @@
 {
-  "name": "Fantasy Clubhouse Plus",
+  "name": "Fantasy Targets",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "tbd",
+  "description": "Enhances the ESPN fantasy football website with additional information, such as player numbers and receiver targets.",
   "permissions": [
     "http://espn.go.com//*",
     "http://games.espn.go.com/*",

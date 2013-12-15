@@ -10,7 +10,8 @@ chrome.runtime.onMessage.addListener(
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
           var targets = getTargets(xhr.responseText);
-          injectCells(2, targets);
+          if (targets)
+            injectCells(2, targets);
           addNumber(xhr.responseText);
         }
     };

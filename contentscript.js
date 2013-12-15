@@ -9,19 +9,48 @@ chrome.runtime.onMessage.addListener(
     xhr.open("GET", "http://espn.go.com/nfl/player/gamelog/_/id/" + playerId, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
-          AddTargets(xhr.responseText);
-          AddNumber(xhr.responseText);
+          var targets = getTargets(xhr.responseText);
+          injectCells(2, targets);
+          addNumber(xhr.responseText);
         }
     };
     xhr.send();
   });
 
-function AddNumber(xhr) {
+function addNumber(xhr) {
   pnum = $('ul.general-info li.first', xhr).text().trim().split(' ')[0];
   $('div.player-name').append('<p>' + pnum + '</p>');
 }
 
-function AddTargets(xhr) {
+function injectCells(index, values) {
+  var tableRows = $('div#tabView0 div#moreStatsView0 div#pcBorder table tbody tr');
+
+  var iter = 0;
+  for (var i = 0; i < tableRows.length; i++) {
+
+    var newCell = tableRows[i].insertCell(index);
+    newCell.setAttribute('width', 100);
+    newCell.setAttribute('align', 'right');
+    //Set class
+    if (i === 0)
+      newCell.setAttribute('class', 'pcTanRight');
+    else
+      newCell.setAttribute('class', i%2 ? 'pcEven' : 'pcOdd');
+      
+    //Set text
+    if (cellsEqual(tableRows[i], [1], 'BYE')) {
+      newCell.innerText = '-';
+    }
+    else if (cellsEqual(tableRows[i], [3, 4, 5, 6], '0'))
+      newCell.innerText = '0';
+    else {
+      newCell.innerText = values[iter] || '';
+      iter++;
+    }
+  }
+}
+
+function getTargets(xhr) {
   var headerVals = $.map(
     $("div.mod-player-stats div.mod-content table tbody tr.colhead td", xhr),
     function(val) { return val.innerText; });
@@ -29,42 +58,19 @@ function AddTargets(xhr) {
 
   if (tgtIndex < 0) return;
 
-  var targetCells = $.map(
+  var targets = $.map(
     $('div.mod-player-stats div.mod-content table tbody tr.colhead, .oddrow, .evenrow', xhr),
     function(row) {
       return row.cells[4].innerText;
     });
 
-  var tableRows = $('div#tabView0 div#moreStatsView0 div#pcBorder table tbody tr');
+  return targets
+}
 
-  var iter = 0;
-  for (var i = 0; i < tableRows.length; i++) {
-
-    var newCell = tableRows[i].insertCell(2);
-    newCell.setAttribute('width', 100);
-    newCell.setAttribute('align', 'right');
-    if (tableRows[i].cells[1].innerText === 'BYE') {
-      newCell.innerText = '-';
-      newCell.setAttribute('class', i%2 ? 'pcEven' : 'pcOdd');
-    }
-    else if (tableRows[i].cells[3].innerText === '0' &&
-    tableRows[i].cells[4].innerText === '0' &&
-    tableRows[i].cells[5].innerText === '0' &&
-    tableRows[i].cells[6].innerText === '0') {
-      newCell.innerText = '0';
-      newCell.setAttribute('class', i%2 ? 'pcEven' : 'pcOdd');            
-    }
-    else if (i === 0) {
-      newCell.setAttribute('class', 'pcTanRight');
-      newCell.innerText = targetCells[iter]; 
-      iter++;
-    }
-    else {
-      console.log('writing cell' + targetCells[iter]);
-      newCell.innerText = targetCells[iter] || '';
-      newCell.setAttribute('class', i%2 ? 'pcEven' : 'pcOdd');
-      iter++;
-    }
-
+function cellsEqual(row, cellIndexArray, value) {
+  for (var i = 0; i < cellIndexArray.length; i++) {
+    if (row.cells[cellIndexArray[i]].innerText !== value)
+      return false;
   }
+  return true;
 }

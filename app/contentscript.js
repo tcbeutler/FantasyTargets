@@ -6,9 +6,7 @@ chrome.runtime.onMessage.addListener(
     xhr.open("GET", "http://espn.go.com/nfl/player/gamelog/_/id/" + playerId, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
-          var targets = getColumn(xhr.responseText, 'TGTS');
-          if (targets)
-            injectCells(2, targets);
+          addTargets(xhr);
           // var qbrs = getColumn(xhr.responseText, 'QBR');
           // if (qbrs)
           //   injectCells(5, qbrs);
@@ -23,7 +21,15 @@ function addNumber(xhr) {
   $('div.player-name').append('<p>' + pnum + '</p>');
 }
 
-function injectCells(index, values) {
+function addTargets(xhr) {
+  var targets = getColumn(xhr.responseText, 'TGTS');
+  var receptions = getColumn(xhr.responseText, 'REC');
+  var yards = getColumn(xhr.responseText, 'YDS');
+  if (targets)
+    injectCells(2, targets, receptions, yards);  
+}
+
+function injectCells(index, values, receptions, yards) {
   var tableRows = $('div#tabView0 div#moreStatsView0 div#pcBorder table tbody tr');
 
   var iter = 0;
@@ -42,8 +48,11 @@ function injectCells(index, values) {
     if (cellsEqual(tableRows[i], [1], 'BYE')) {
       newCell.innerText = '-';
     }
-    else if (cellsEqual(tableRows[i], [3, 4, 5, 6], '0'))
+    else if (cellsEqual(tableRows[i], [3, 4, 5, 6], '0') && receptions[iter] !== '0' && yards[iter] !== '0') {
+      console.log('skipping ' + values[iter] + ' on row ' + iter);
+      console.log('receptions for skip: ' + receptions[iter] + ' yards for skip: ' + yards[iter]);
       newCell.innerText = '0';
+    }
     else {
       newCell.innerText = values[iter] || '';
       iter++;
@@ -56,7 +65,6 @@ function getColumn(xhr, colName) {
     $("div.mod-player-stats div.mod-content table tbody tr.colhead td", xhr),
     function(val) { return val.innerText; });
   var index = headerVals.indexOf(colName);
-  console.log(index)
   if (index < 0) return;
 
   var values = $.map(
@@ -65,7 +73,7 @@ function getColumn(xhr, colName) {
       return row.cells[index].innerText;
     });
 
-  return values
+  return values;
 }
 
 function cellsEqual(row, cellIndexArray, value) {

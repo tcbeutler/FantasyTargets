@@ -2,11 +2,10 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     var playerId = request.url.match(/playerId=(\d+)&/)[1];
     var xhr = new XMLHttpRequest();
-    //xhr.open("GET", "http://espn.go.com/nfl/player/_/id/" + playerId, true);
     xhr.open("GET", "http://espn.go.com/nfl/player/gamelog/_/id/" + playerId, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
-          addTargets(xhr);
+          addTargets(xhr.responseText);
           // var qbrs = getColumn(xhr.responseText, 'QBR');
           // if (qbrs)
           //   injectCells(5, qbrs);
@@ -22,17 +21,37 @@ function addNumber(xhr) {
 }
 
 function addTargets(xhr) {
-  var targets = getColumn(xhr.responseText, 'TGTS');
-  var receptions = getColumn(xhr.responseText, 'REC');
-  var yards = getColumn(xhr.responseText, 'YDS');
-  if (targets)
-    injectCells(2, targets, receptions, yards);  
+  var targets = getColumn(xhr, 'TGTS');
+  var receptions = getColumn(xhr, 'REC');
+  var yards = getColumn(xhr, 'YDS');
+
+  if(!targets)
+    return;
+
+  var tableRows = $('div#tabView0 div#moreStatsView0 div#pcBorder table tbody tr');
+  var newTargets = [];
+  var iter = 0;
+  for (var i = 0; i < tableRows.length; i++) {
+    //Set text
+    if (cellsEqual(tableRows[i], [1], 'BYE')) {
+      newTargets.push('-');
+    }
+    else if (cellsEqual(tableRows[i], [2, 3, 4, 5], '-')) {
+     newTargets.push('-');
+    }
+    else if (cellsEqual(tableRows[i], [2, 3, 4, 5], '0') && receptions[iter] !== '0' && yards[iter] !== '0') {
+     newTargets.push('0');
+    }
+    else {
+      newTargets.push(targets[iter] || '');
+      iter++;
+    }
+  }  
+  injectCells(2, newTargets);  
 }
 
-function injectCells(index, values, receptions, yards) {
+function injectCells(index, values) {
   var tableRows = $('div#tabView0 div#moreStatsView0 div#pcBorder table tbody tr');
-
-  var iter = 0;
   for (var i = 0; i < tableRows.length; i++) {
 
     var newCell = tableRows[i].insertCell(index);
@@ -43,20 +62,19 @@ function injectCells(index, values, receptions, yards) {
       newCell.setAttribute('class', 'pcTanRight');
     else
       newCell.setAttribute('class', i%2 ? 'pcEven' : 'pcOdd');
+    newCell.innerText = values[i] || '';
       
-    //Set text
-    if (cellsEqual(tableRows[i], [1], 'BYE')) {
-      newCell.innerText = '-';
-    }
-    else if (cellsEqual(tableRows[i], [3, 4, 5, 6], '0') && receptions[iter] !== '0' && yards[iter] !== '0') {
-      console.log('skipping ' + values[iter] + ' on row ' + iter);
-      console.log('receptions for skip: ' + receptions[iter] + ' yards for skip: ' + yards[iter]);
-      newCell.innerText = '0';
-    }
-    else {
-      newCell.innerText = values[iter] || '';
-      iter++;
-    }
+    // //Set text
+    // if (cellsEqual(tableRows[i], [1], 'BYE')) {
+    //   newCell.innerText = '-';
+    // }
+    // else if (cellsEqual(tableRows[i], [3, 4, 5, 6], '0') && receptions[iter] !== '0' && yards[iter] !== '0') {
+    //   newCell.innerText = '0';
+    // }
+    // else {
+    //   newCell.innerText = values[iter] || '';
+    //   iter++;
+    //}
   }
 }
 

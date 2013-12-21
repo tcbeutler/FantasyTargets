@@ -6,9 +6,6 @@ chrome.runtime.onMessage.addListener(
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
           addTargets(xhr.responseText);
-          // var qbrs = getColumn(xhr.responseText, 'QBR');
-          // if (qbrs)
-          //   injectCells(5, qbrs);
           addNumber(xhr.responseText);
         }
     };
@@ -28,11 +25,11 @@ function addTargets(xhr) {
   if(!targets)
     return;
 
+  //Fill in blanks for missing games, byes. etc
   var tableRows = $('div#tabView0 div#moreStatsView0 div#pcBorder table tbody tr');
   var newTargets = [];
   var iter = 0;
   for (var i = 0; i < tableRows.length; i++) {
-    //Set text
     if (cellsEqual(tableRows[i], [1], 'BYE')) {
       newTargets.push('-');
     }
@@ -63,18 +60,6 @@ function injectCells(index, values) {
     else
       newCell.setAttribute('class', i%2 ? 'pcEven' : 'pcOdd');
     newCell.innerText = values[i] || '';
-      
-    // //Set text
-    // if (cellsEqual(tableRows[i], [1], 'BYE')) {
-    //   newCell.innerText = '-';
-    // }
-    // else if (cellsEqual(tableRows[i], [3, 4, 5, 6], '0') && receptions[iter] !== '0' && yards[iter] !== '0') {
-    //   newCell.innerText = '0';
-    // }
-    // else {
-    //   newCell.innerText = values[iter] || '';
-    //   iter++;
-    //}
   }
 }
 

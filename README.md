@@ -2,7 +2,7 @@
 
 #####[Chrome Web Store](https://chrome.google.com/webstore/detail/fantasy-targets/abmbpdhchbhhecbjhnhlnobeiihhjfpa?utm_campaign=en&utm_source=en-ha-na-us-bk-webstr&utm_medium=ha)
 
-![Preview](http://imgur.com/OnAVQo2)
+![Preview](http://i.imgur.com/OnAVQo2.jpg)
 ==============
 
 ####Lightweight chrome extension to add targets to player stats in ESPN Fantasy Football.

@@ -1,6 +1,6 @@
 {
   "name": "Fantasy Targets",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "manifest_version": 2,
   "description": "Enhances the ESPN fantasy football website with additional information, such as player numbers and receiver targets.",
   "permissions": [

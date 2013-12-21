@@ -1,11 +1,11 @@
-###FantasyTargets  
+##FantasyTargets  
 
 #####[Chrome Web Store](https://chrome.google.com/webstore/detail/fantasy-targets/abmbpdhchbhhecbjhnhlnobeiihhjfpa?utm_campaign=en&utm_source=en-ha-na-us-bk-webstr&utm_medium=ha)
 
+####Lightweight chrome extension to add targets to player stats in ESPN Fantasy Football.
+
 ![Preview](http://i.imgur.com/OnAVQo2.jpg)
 ==============
-
-####Lightweight chrome extension to add targets to player stats in ESPN Fantasy Football.
 
 ####Idea log: 
 * Move player "more stats" into tabs and name them properly.

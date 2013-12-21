@@ -6,7 +6,6 @@
 ####Lightweight chrome extension to add targets to player stats in ESPN Fantasy Football.
 
 ####Idea log: 
-* **BUG FIX: IF ALL 0'S ACROSS THE BOARD FOR A WEEK, DONT SKIP THE ROW**
 * Show collective injury data  from previous year(P, Q, O, IR designations) Maybe next to week column.
         http://fftoday.com/nfl/13_injury_wk14.html
 * Data storage - player notes.

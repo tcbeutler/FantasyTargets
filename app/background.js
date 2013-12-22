@@ -1,7 +1,4 @@
 console.log('hi');
-// chrome.webRequest.onCompleted.addListener(function(details) {
-//  console.log('completed' + details);
-// }, {urls: ["http://*/*"]}, ["responseHeaders"]);
 chrome.webRequest.onCompleted.addListener(
     function(details) {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {

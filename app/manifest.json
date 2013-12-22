@@ -19,7 +19,7 @@
   "content_scripts": [
     {
       "matches": ["http://games.espn.go.com/ffl/*"],
-      "js" : ["jquery.js", "contentscript.js"]
+      "js" : ["jquery.js", "common.js", "espn.js", "yahoo.js", "contentscript.js"]
     }
   ]
 }

@@ -6,6 +6,7 @@
   "permissions": [
     "http://espn.go.com//*",
     "http://games.espn.go.com/*",
+    "http://sports.yahoo.com/nfl/*",
     "webRequest"
   ],
   "icons": {

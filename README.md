@@ -8,6 +8,7 @@
 ==============
 
 ####Idea log: 
+* Style modifications to tabs above with "videos" etc so they're not so ugly.
 * Add caching of requsts  
         https://github.com/monsur/jscache  
 * Move player "more stats" into tabs and name them properly.

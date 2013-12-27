@@ -1,4 +1,3 @@
-console.log('hi');
 // chrome.webRequest.onCompleted.addListener(function(details) {
 //  console.log('completed' + details);
 // }, {urls: ["http://*/*"]}, ["responseHeaders"]);

@@ -13,7 +13,7 @@ chrome.webRequest.onCompleted.addListener(
 // filters
 {
     urls: [
-        "http://games.espn.go.com/ffl/format/playerpop/*",
+        "http://games.espn.go.com/ffl/format/playerpop/overview?*",
     ]
 },
 ["responseHeaders"]);

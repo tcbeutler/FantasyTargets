@@ -11,4 +11,3 @@ chrome.webRequest.onCompleted.addListener(
   //permissions
   ["responseHeaders"]
 );
-

@@ -27,7 +27,7 @@
 1. http://sports.yahoo.com/nfl/teams/atl/roster/ => $('a[title="Roddy White"]')  
         Possibly cache this using storage.
 2. http://sports.yahoo.com/nfl/players/7203/ => $('div#mediasportsplayergamelog td.nfl-stat-type-310.targets')  
-
+3. Injury history - http://www.kffl.com/player/9270/nfl/injury_history/steven-jackson
 
 fftoday.com/stats/players  
 http://www.kffl.com/player/{id}/nfl/utilization  

@@ -19,6 +19,7 @@
 * Links to Yahoo player pages. Way more information.
 * QBR? Completion percentage? 
 * Add rotoworld news updates!
+       http://www.rotoworld.com/content/playersearch.aspx?searchname=gordon%2c+josh&sport=mlb
 
 
 ####Possible scrape sites:  

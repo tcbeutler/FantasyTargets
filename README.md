@@ -18,6 +18,7 @@
         http://developer.chrome.com/extensions/storage.html
 * Links to Yahoo player pages. Way more information.
 * QBR? Completion percentage? 
+* Add rotoworld news updates!
 
 
 ####Possible scrape sites:  
@@ -31,7 +32,6 @@
 
 fftoday.com/stats/players  
 http://www.kffl.com/player/{id}/nfl/utilization  
-
 
 
 

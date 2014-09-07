@@ -30,7 +30,8 @@ var yahooStatsProvider = function(team, playerName) {
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
           var result = $('a[title="' + playerName + '"]', xhr.responseText);
-          playerPage.resolve('http://sports.yahoo.com' + result[0].attributes.href.value + '/gamelog');
+          console.log(result);
+          playerPage.resolve(result[0].attributes.href.value + '/gamelog');
         }
       };
       xhr.send();

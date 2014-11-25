@@ -1,8 +1,9 @@
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     var playerId = request.url.match(/playerId=(\d+)&/)[1];
+    var thisYear = new Date().getFullYear();
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://espn.go.com/nfl/player/gamelog/_/id/" + playerId, true);
+    xhr.open("GET", "http://espn.go.com/nfl/player/gamelog/_/id/" + playerId + "/year/" + thisYear, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
           addTargets(xhr.responseText);

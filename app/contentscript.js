@@ -72,7 +72,7 @@ function getColumn(xhr, colName) {
   if (index < 0) return;
 
   var values = $.map(
-    $('div.mod-player-stats div.mod-content table tbody tr.colhead, .oddrow, .evenrow', xhr),
+    $('div.mod-player-stats div.mod-content table tbody tr.colhead, tr[class*="team"]', xhr),
     function(row) {
       return row.cells[index].innerText;
     });

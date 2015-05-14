@@ -30,6 +30,7 @@
         Possibly cache this using storage.
 2. http://sports.yahoo.com/nfl/players/7203/ => $('div#mediasportsplayergamelog td.nfl-stat-type-310.targets')  
 3. Injury history - http://www.kffl.com/player/9270/nfl/injury_history/steven-jackson
+4. http://sports.yahoo.com/nfl/stats/bycategory?cat=Receiving&conference=NFL&year=season_2013&timeframe=Week15&sort=32&old_category=Receiving
 
 fftoday.com/stats/players  
 http://www.kffl.com/player/{id}/nfl/utilization  

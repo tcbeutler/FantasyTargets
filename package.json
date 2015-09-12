@@ -1,0 +1,28 @@
+{
+  "name": "fantasyTargets",
+  "version": "0.0.2",
+  "description": "Augments ESPN Fantasy Football website with additional player stats.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node_modules/ender/bin/ender build q bonzo jquery traversty lodash --output app/lib/ender.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tcbeutler/FantasyTargets.git"
+  },
+  "keywords": [
+    "espn",
+    "fantasy",
+    "football",
+    "chrome",
+    "plugin"
+  ],
+  "author": "Thomas Beutler",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/tcbeutler/FantasyTargets/issues"
+  },
+  "homepage": "https://github.com/tcbeutler/FantasyTargets",
+  "devDependencies": {}
+}

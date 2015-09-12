@@ -1,7 +1,11 @@
 //Yahoo specific data source functionality.
 var yahooStatsProvider = function(team, playerName) {
+  var teams = { 'FA': '', 'Arizona Cardinals': 'ari', 'Atlanta Falcons': 'atl', 'Baltimore Ravens ': 'bal', 'Buffalo Bills': 'buf', 'Carolina Panthers': 'car', 'Chicago Bears': 'chi', 'Cincinnati Bengals': 'cin', 'Cleveland Browns': 'cle', 'Dallas Cowboys': 'dal', 'Denver Broncos': 'den', 'Detroit Lions': 'det', 'Green Bay Packers': 'gnb', 'Houston Texans': 'hou', 'Indianapolis Colts': 'ind', 'Jacksonville Jaguars': 'jac', 'Kansas City Chiefs': 'kan', 'Miami Dolphins': 'mia', 'Minnesota Vikings': 'min', 'New England Patriots': 'nwe', 'New Orleans Saints': 'nor', 'New York Giants': 'nyg', 'New York Jets': 'nyj', 'Oakland Raiders': 'oak', 'Philadelphia Eagles': 'phi', 'Pittsburgh Steelers': 'pit', 'San Diego Chargers': 'sdg', 'Seattle Seahawks': 'sea', 'San Francisco 49ers': 'sfo', 'St. Louis Rams': 'stl', 'Tampa Bay Buccaneers': 'tam', 'Tennessee Titans': 'ten', 'Washington Redskins': 'was' };
+
 
   return (function(team, playerName) {
+    var Q = require('q');
+    var $ = require('jquery');
 
     var addNumber = function(res) {
       var pnum = $('span.team-info', res).text().trim().split(',')[0];
@@ -10,16 +14,16 @@ var yahooStatsProvider = function(team, playerName) {
 
     var getStats = function() {
       var stats = Q.defer();
-      getPlayerFromTeam().done(function(url) {
-        getDataForPlayer(url).done(function(data) {
+      getPlayerFromTeam().then(function(url) {
+        getDataForPlayer(url).then(function(data) {
           stats.resolve({
-            targets: extractColumn(data, 'nfl-stat-type-310.targets', 'TGTS'),
+            targets: extractColumn(data, 'nfl-stat-type-310.targets', 'YAH'),
             receptions: extractColumn(data, 'nfl-stat-type-302.receptions', 'REC'),
             yards: extractColumn(data, 'nfl-stat-type-303.yards', 'YDS'),
           });
         });
       });
-      return stats.promise;
+      return stats.promise
     };
 
     var getPlayerFromTeam = function() {
@@ -30,7 +34,6 @@ var yahooStatsProvider = function(team, playerName) {
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
           var result = $('a[title="' + playerName + '"]', xhr.responseText);
-          console.log(result);
           playerPage.resolve(result[0].attributes.href.value + '/gamelog');
         }
       };
@@ -64,6 +67,7 @@ var yahooStatsProvider = function(team, playerName) {
 
     return {
       getStats: getStats,
+      name: 'yahoo'
     };
 
   }(team, playerName));

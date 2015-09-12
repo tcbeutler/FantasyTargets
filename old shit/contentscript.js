@@ -1,38 +1,33 @@
-var FantasyProsStatsProvider = require('FantasyProsStatsProvider');
+var teams = { 'FA': '', 'Arizona Cardinals': 'ari', 'Atlanta Falcons': 'atl', 'Baltimore Ravens ': 'bal', 'Buffalo Bills': 'buf', 'Carolina Panthers': 'car', 'Chicago Bears': 'chi', 'Cincinnati Bengals': 'cin', 'Cleveland Browns': 'cle', 'Dallas Cowboys': 'dal', 'Denver Broncos': 'den', 'Detroit Lions': 'det', 'Green Bay Packers': 'gnb', 'Houston Texans': 'hou', 'Indianapolis Colts': 'ind', 'Jacksonville Jaguars': 'jac', 'Kansas City Chiefs': 'kan', 'Miami Dolphins': 'mia', 'Minnesota Vikings': 'min', 'New England Patriots': 'nwe', 'New Orleans Saints': 'nor', 'New York Giants': 'nyg', 'New York Jets': 'nyj', 'Oakland Raiders': 'oak', 'Philadelphia Eagles': 'phi', 'Pittsburgh Steelers': 'pit', 'San Diego Chargers': 'sdg', 'Seattle Seahawks': 'sea', 'San Francisco 49ers': 'sfo', 'St. Louis Rams': 'stl', 'Tampa Bay Buccaneers': 'tam', 'Tennessee Titans': 'ten', 'Washington Redskins': 'was' };
 
 chrome.runtime.onMessage.addListener(
-
   function(request, sender, sendResponse) {
-    var playerName = $('div.player-name').text();
-    var fp = new FantasyProsStatsProvider(playerName);
-    // fp.getStats();
-    addTargets(fp)
-
-    // compare with espn and yahoo
     var position = $('span[title="Position Eligibility"').text().split(' ')[1];
     var playerId = request.url.match(/playerId=(\d+)&/)[1];
-    var espn = new espnStatsProvider(playerId)
-    addTargets(espn);
-
-    var team = $('span[title="Team"]').text();
+    //var espn = new espnStatsProvider(playerId);
     var playerName = $('div.player-name').text();
-    var yahoo = new yahooStatsProvider(team, playerName);
-    addTargets(yahoo);
-  }
-);
+    var fantasyProsStatsProvider = new FantasyProsStatsProvider(playerName);
+
+    addTargets(fantasyProsStatsProvider);
+    // if(position === 'RB') {
+    //   var team = $('span[title="Team"]').text();
+    //   var yahoo = new yahooStatsProvider(team, playerName);
+    //   addTargets(yahoo);
+    //   return;
+    // }
+    // else {
+    //   addTargets(espn);
+    // }
+  });
 
 function addTargets(statProvider) {
-  var start = new Date();
   var data = statProvider.getStats();
 
   data.done(function(r) {
-    console.log(r)
-    var took = new Date() - start;
-    console.log(statProvider.name + ' took - ', took);
     if(!r.targets)
       return;
-    //targets = adjustForMissingWeeks(r.targets, r.yards, r.receptions);
-    injectCells(2, r.targets);  
+    var newTargets = adjustForMissingWeeks(r.targets, r.yards, r.receptions);
+    injectCells(2, newTargets);  
   });
 
 }
@@ -49,7 +44,7 @@ function injectCells(index, values) {
       newCell.setAttribute('class', 'pcTanRight');
     else
       newCell.setAttribute('class', i%2 ? 'pcEven' : 'pcOdd');
-    newCell.innerText = values[i] || '-';
+    newCell.innerText = values[i] || '';
   }
 }
 
@@ -84,3 +79,13 @@ function cellsEqual(row, cellIndexArray, value) {
   }
   return true;
 }
+
+
+
+
+
+
+
+
+
+

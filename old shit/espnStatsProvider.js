@@ -2,8 +2,6 @@
 var espnStatsProvider = function(playerId) {
 
   return (function(playerId) {
-    var Q = require('q');
-    var $ = require('jquery');
 
     function addNumber(xhr) {
       var pnum = $('ul.general-info li.first', xhr).text().trim().split(' ')[0];
@@ -19,7 +17,7 @@ var espnStatsProvider = function(playerId) {
           yards: extractColumn(data, 'YDS'),
         });
       });
-      return stats.promise
+      return stats.promise;
     };
 
     function getDataForPlayer(playerId) {
@@ -53,8 +51,7 @@ var espnStatsProvider = function(playerId) {
 
     return {
       getStats: getStats,
-      print: print,
-      name: 'espn'
+      print: print
     };
 
   }(playerId));

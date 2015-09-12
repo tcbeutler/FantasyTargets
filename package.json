@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node_modules/ender/bin/ender build q bonzo jquery traversty lodash --output app/lib/ender.js"
+    "build": "node_modules/ender/bin/ender build q jquery lodash --output app/lib/ender.js"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,7 @@
     "url": "https://github.com/tcbeutler/FantasyTargets/issues"
   },
   "homepage": "https://github.com/tcbeutler/FantasyTargets",
-  "devDependencies": {}
+  "devDependencies": {
+    "ender": "~2.1.1"
+  }
 }

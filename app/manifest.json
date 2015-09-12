@@ -11,8 +11,6 @@
     "http://*.fantasypros.com/*",
     "https://*.fantasypros.com/*",
 
-    "http://sports.yahoo.com/nfl/*",
-    "https://sports.yahoo.com/nfl/*",
     "http://wayback.archive.org/*",
 
     "webRequest"
@@ -28,10 +26,10 @@
     {
       "matches": ["http://games.espn.go.com/ffl/*"],
       "js" : [
-        "lib/ender.js",
+        "lib/ender.min.js",
         "fantasyProsStatsProvider.js",
         "espnStatsProvider.js",
-        "yahooStatsProvider.js",
+        "domController.js",
         "contentscript.js"
       ]
     }

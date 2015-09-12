@@ -14,15 +14,6 @@ provide('FantasyProsStatsProvider', function(playerName) {
     .then(fetchPlayerStats)
     .then(parseStats)
 
-    .tap(function(results) {
-      var time = new Date() - start;
-      console.log('fantasyPros time = ', time);
-    })
-
-    .catch(function(err) {
-      console.log('ERR', err)
-    })
-
     function executeSearch() {
       var url = ROOTURL + '/ajax/search-nfl.php?term=';
       url += playerName.split(' ').join('+');
@@ -63,9 +54,8 @@ provide('FantasyProsStatsProvider', function(playerName) {
         })
         .toArray();
 
-      targets.unshift('FFP');
       targets.pop(); //Last row is season aggregate
-      return { targets: targets };
+      return targets;
     }
 
   }

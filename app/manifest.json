@@ -5,7 +5,16 @@
   "description": "Enhances the ESPN fantasy football website with additional information, such as player numbers and receiver targets.",
   "permissions": [
     "http://espn.go.com//*",
+    "https://espn.go.com//*",
     "http://games.espn.go.com/*",
+    "https://games.espn.go.com/*",
+    "http://*.fantasypros.com/*",
+    "https://*.fantasypros.com/*",
+
+    "http://sports.yahoo.com/nfl/*",
+    "https://sports.yahoo.com/nfl/*",
+    "http://wayback.archive.org/*",
+
     "webRequest"
   ],
   "icons": {
@@ -18,7 +27,13 @@
   "content_scripts": [
     {
       "matches": ["http://games.espn.go.com/ffl/*"],
-      "js" : ["jquery.js", "contentscript.js"]
+      "js" : [
+        "lib/ender.js",
+        "fantasyProsStatsProvider.js",
+        "espnStatsProvider.js",
+        "yahooStatsProvider.js",
+        "contentscript.js"
+      ]
     }
   ]
 }

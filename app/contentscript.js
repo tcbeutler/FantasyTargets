@@ -12,7 +12,7 @@ chrome.runtime.onMessage.addListener(
     }
     var playerId = playerIds[1];
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://espn.go.com/nfl/player/gamelog/_/id/" + playerId, true);
+    xhr.open("GET", "http://espn.com/nfl/player/gamelog/_/id/" + playerId, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
           addTargets(xhr.responseText);

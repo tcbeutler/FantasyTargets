@@ -4,8 +4,9 @@
   "manifest_version": 2,
   "description": "Enhances the ESPN fantasy football website with additional information, such as player numbers and receiver targets.",
   "permissions": [
-    "http://espn.go.com//*",
-    "http://games.espn.go.com/*",
+    "http://espn.com/*",
+    "http://www.espn.com/*",
+    "http://games.espn.com/*",
     "webRequest"
   ],
   "icons": {
@@ -17,7 +18,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://games.espn.go.com/ffl/*"],
+      "matches": ["http://games.espn.com/ffl/*"],
       "js" : ["jquery.js", "contentscript.js"]
     }
   ]

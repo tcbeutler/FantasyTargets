@@ -1,26 +1,45 @@
-var FantasyProsStatsProvider = require('FantasyProsStatsProvider');
 var EspnStatsProvider = require('EspnStatsProvider');
-var dom = require('DomController')();
+var FantasyProsStatsProvider = require('FantasyProsStatsProvider');
+var DomController = require('DomController');
 var $ = require('jquery');
 
 chrome.runtime.onMessage.addListener(
 
   function(request, sender, sendResponse) {
-    var playerName = $('div.player-name').text();
-    console.log(request.url)
-    var espnPlayerId = request.url.match(/playerId=(\d+)&/)[1];
-    console.log(espnPlayerId)
+    var position = $("span[title='Position Eligibility']").text().split(' ')[1];
+    var dom = new DomController(position);
 
-    new FantasyProsStatsProvider(playerName)
-      .getStats()
-      .then(dom.addTargets, handleError)
+     switch(position) {
+      case 'WR':
+      case 'TE':
 
-    new EspnStatsProvider(espnPlayerId)
-      .getPlayerNumber()
-      .then(dom.addPlayerNumber, handleError)
+        var espnPlayerId = $('div.mugshot img').attr('src').match(/players\/full\/(\d+)\.png/)[1];
+        var statsProvider = new EspnStatsProvider(espnPlayerId);
+        statsProvider.getPlayerNumber()
+          .then(dom.addPlayerNumber)
+          .catch(handleError);
+
+        statsProvider.getTargets()
+          .then(dom.addTargets)
+          .catch(handleError);
+
+        break;
+
+      case 'RB':
+        var espnPlayerId = $('div.mugshot img').attr('src').match(/players\/full\/(\d+)\.png/)[1];
+        new EspnStatsProvider(espnPlayerId).getPlayerNumber()
+          .then(dom.addPlayerNumber)
+          .catch(handleError);
+
+        var playerName = $('div.player-card-player-info div.player-name').text();
+        new FantasyProsStatsProvider(playerName).getTargets()
+          .then(dom.addTargets)
+          .catch(handleError);
+     }
 
     function handleError(err) {
-      console.error('Error', err);
+      console.error('FantasyTargets:', err);
     }
+
   }
 );

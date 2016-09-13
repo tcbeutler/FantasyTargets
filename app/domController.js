@@ -1,6 +1,7 @@
-provide('DomController', function() {
-
+provide('DomController', function(position) {
   var $ = require('jquery');
+
+  var targetsStatsViewIndex = position == 'RB' ? 1 : 0
 
   function addPlayerNumber(pnum) {
     $('div.player-name').append(' ' + pnum);
@@ -14,7 +15,7 @@ provide('DomController', function() {
   }
 
   function addColumn(index, values) {
-    var tableRows = $('div#tabView0 div#moreStatsView0 div#pcBorder table tbody tr');
+    var tableRows = $('div#tabView0 div#moreStatsView' + targetsStatsViewIndex + ' div#pcBorder table tbody tr');
     for (var i = 0; i < tableRows.length; i++) {
 
       var newCell = tableRows[i].insertCell(index);

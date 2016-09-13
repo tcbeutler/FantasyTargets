@@ -1,16 +1,14 @@
 {
   "name": "Fantasy Targets",
-  "version": "0.1",
+  "version": "0.1.1",
   "manifest_version": 2,
   "description": "Enhances the ESPN fantasy football website with additional information, such as player numbers and receiver targets.",
   "permissions": [
-    "http://espn.go.com//*",
-    "https://espn.go.com//*",
-    "http://games.espn.go.com/*",
-    "https://games.espn.go.com/*",
+    "http://www.espn.com/nfl/*",
+    "http://games.espn.com/*",
+    "https://games.espn.com/*",
     "http://*.fantasypros.com/*",
     "https://*.fantasypros.com/*",
-
     "webRequest",
     "storage"
   ],
@@ -23,11 +21,15 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://games.espn.go.com/ffl/*"],
+      "matches": [
+        "http://games.espn.com/ffl/*",
+        "https://games.espn.com/ffl/*"
+      ],
       "js" : [
         "lib/ender.min.js",
         "fantasyProsStatsProvider.js",
         "espnStatsProvider.js",
+        "nflScheduleUtils.js",
         "domController.js",
         "contentscript.js"
       ]

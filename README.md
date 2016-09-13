@@ -12,12 +12,10 @@
         https://github.com/monsur/jscache  
         https://github.com/knadh/localstorageDB
 
-* Better player number source (ESPN rookies broken)
-        ESPN rookie data uses inconsistent player numbers
-
 * Pre-draw columns during loading (and remove if fails)
 * Pre-fetch data on page
 * Add options page
+* Expand RB flyout to show receiving numbers next to rushing numbers.
 
 ####Idea log: 
 * Style modifications to tabs above with "videos" etc so they're not so ugly.

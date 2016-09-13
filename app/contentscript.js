@@ -9,33 +9,31 @@ chrome.runtime.onMessage.addListener(
     var position = $("span[title='Position Eligibility']").text().split(' ')[1];
     var dom = new DomController(position);
 
-     switch(position) {
-      case 'WR':
-      case 'TE':
+    // Do nothing on DST or if problem fetching ESPN player ID
+    var espnPlayerIdMatch = $('div.mugshot img').attr('src').match(/players\/full\/(\d+)\.png/);
+    if (!Array.isArray(espnPlayerIdMatch) || espnPlayerIdMatch.length < 2 || position == 'D/ST') {
+      return;
+    }
 
-        var espnPlayerId = $('div.mugshot img').attr('src').match(/players\/full\/(\d+)\.png/)[1];
-        var statsProvider = new EspnStatsProvider(espnPlayerId);
-        statsProvider.getPlayerNumber()
+    // Get player number for anyone with a playerID
+    var espnPlayerId = espnPlayerIdMatch[1];
+    var espnStatsProvider = new EspnStatsProvider(espnPlayerId);
+    espnStatsProvider.getPlayerNumber()
           .then(dom.addPlayerNumber)
           .catch(handleError);
 
-        statsProvider.getTargets()
+    // Add targets from ESPN for WR/TE, otherwise from FantasyPros for RB
+    if (position == 'WR' || position == 'TE') {
+      espnStatsProvider.getTargets()
           .then(dom.addTargets)
           .catch(handleError);
 
-        break;
-
-      case 'RB':
-        var espnPlayerId = $('div.mugshot img').attr('src').match(/players\/full\/(\d+)\.png/)[1];
-        new EspnStatsProvider(espnPlayerId).getPlayerNumber()
-          .then(dom.addPlayerNumber)
-          .catch(handleError);
-
+    } else if (position == 'RB') {
         var playerName = $('div.player-card-player-info div.player-name').text();
         new FantasyProsStatsProvider(playerName).getTargets()
           .then(dom.addTargets)
           .catch(handleError);
-     }
+    };
 
     function handleError(err) {
       console.error('FantasyTargets:', err);

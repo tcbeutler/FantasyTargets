@@ -35,26 +35,26 @@ provide('FantasyProsStatsProvider', function(playerName) {
   }
 
   function fetchPlayerStats(playerLink) {
-    var url = ROOTURL + '/nfl/stats/' + playerLink + '.php';
+    var url = ROOTURL + '/nfl/games/' + playerLink + '.php';
     return $.ajax(url);
   }
 
   function validateYear(statsPage) {
-      var nflYear = scheduleUtils.currentSeasonYear();
-      var tableHeader = $('.twelve.columns h6', statsPage).text();
-      if (tableHeader.indexOf(nflYear) < 0) {
-        throw new Error('FantasyPros data ' + tableHeader + ' is not for current year ' + nflYear);
+      var nflYear = scheduleUtils.currentSeasonYear().toString();
+      var selectedYear = $('#scoring_select', statsPage).find(":selected").text();
+      if (nflYear !== selectedYear) {
+        throw new Error('FantasyPros data for year ' + selectedYear + ' is not for current year ' + nflYear);
       }
     }
 
   function parseTargets(statsPage) {
     //Get header index
-    var headers = $('.stats-table thead tr:last th', statsPage);
+    var headers = $('.mobile-table thead tr:last th', statsPage);
     headers = _.map(headers, 'innerText');
-    var targetIndex = headers.indexOf('TAR');
+    var targetIndex = headers.indexOf('Tgt');
 
     //Get targets from table body
-    var targets = $('.stats-table tbody tr', statsPage)
+    var targets = $('.mobile-table tbody tr', statsPage)
       .map(function(i, row) {
         return $('td:eq(' + targetIndex + ')', row).text();
       })

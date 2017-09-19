@@ -34,6 +34,7 @@ provide('EspnStatsProvider', function(playerId) {
         iter++;
       }
     }
+
     return newTargets;
 
   }
@@ -58,7 +59,8 @@ provide('EspnStatsProvider', function(playerId) {
         return row.cells[index].innerText;
       });
 
-    return values;
+    // ESPN Game log now has most recent games on top - reverse to get chronological order
+    return values.reverse();
   }
 
   function cellsEqual(row, cellIndexArray, value) {
@@ -82,7 +84,8 @@ provide('EspnStatsProvider', function(playerId) {
   }
 
   function getTargetsPromise() {
-    return playerStatsPageRequest.then(parseTargets);
+    return playerStatsPageRequest
+      .then(parseTargets);
   }
 
   return {
